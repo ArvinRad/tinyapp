@@ -2,6 +2,9 @@ const express = require("express");
 const app = express();
 const PORT = 8080; // default port 8080
 
+//Adding ejs engine
+app.set("view engine", "ejs");
+
 // Creating short url database:
 const urlDatabase = {
   "b2xVn2": "http://www.lighthouselabs.ca",

@@ -2,6 +2,10 @@ const express = require("express");
 const app = express();
 const PORT = 8080; // default port 8080
 
+//Adding the middleware:
+const bodyParser = require("body-parser");
+app.use(bodyParser.urlencoded({extended: true}));
+
 //Adding ejs engine
 app.set("view engine", "ejs");
 
@@ -10,6 +14,16 @@ const urlDatabase = {
   "b2xVn2": "http://www.lighthouselabs.ca",
   "9sm5xK": "http://www.google.com"
 };
+
+//Creating Functions needed:
+function generateRandomString() {
+  let alphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvxyz";
+  let randomString = [];
+  for (let i = 0; i < 6; i++) {
+    randomString.push(alphaNumericString.charAt(Math.trunc(alphaNumericString.length * Math.random())));
+  }
+  return randomString.join('');
+}
 
 // Creating the route page:
 app.get("/", (req, res) => {
@@ -34,7 +48,11 @@ app.get("/urls/:shortURL", (req, res) => {
   res.render("urls_show", templateVars);
 });
 
-
+//Adding a Post handler:
+app.post("/urls", (req, res) => {
+  console.log(req.body);  // Log the POST request body to the console
+  res.send("Ok");         // Respond with 'Ok' (we will replace this)
+});
 
 //Creating a HTML page:
 app.get("/hello", (req, res) => {

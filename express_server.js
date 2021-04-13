@@ -45,16 +45,23 @@ app.get("/urls/new", (req, res) => {
 //Creating page handler for short urls:
 app.get("/urls/:shortURL", (req, res) => {
   const templateVars = { shortURL: req.params.shortURL, longURL: urlDatabase[req.params.shortURL] };
-  res.render("urls_show", templateVars);
+  res.redirect(longURL);;
 });
 
 //Adding a Post handler:
 app.post("/urls", (req, res) => {
-  urlDatabase[generateRandomString()] = req.body["longURL"];  // Log the POST request body to the console
-  const templateVars = { urls: urlDatabase };
-  res.render("urls_index", templateVars);         // Respond with 'Ok' (we will replace this)
+  const shortURL = generateRandomString();
+  const longURL = req.body["longURL"]
+  urlDatabase[shortURL] = longURL;  // Log the POST request body to the console
+  const templateVars = { shortURL: shortURL, longURL: longURL };
+  res.render("urls_show", templateVars);
 });
 
+// Redirecting to URLS using short URLS:
+app.get("/u/:shortURL", (req, res) => {
+  const longURL = urlDatabase[req.params.shortURL];
+  res.redirect(longURL);
+});
 //Creating a HTML page:
 app.get("/hello", (req, res) => {
   res.send("<html><body>Hello <b>World</b></body></html>\n");

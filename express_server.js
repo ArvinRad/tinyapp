@@ -16,9 +16,10 @@ app.get("/", (req, res) => {
   res.send("Hello!");
 });
 
-//Creating additional endpoint:
-app.get("/urls.json", (req, res) => {
-  res.json(urlDatabase);
+//Creating route handler for "/urls":
+app.get("/urls", (req, res) => {
+  const templateVars = { urls: urlDatabase };
+  res.render("urls_index", templateVars);
 });
 
 //Creating a HTML page:

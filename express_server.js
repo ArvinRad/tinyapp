@@ -22,11 +22,19 @@ app.get("/urls", (req, res) => {
   res.render("urls_index", templateVars);
 });
 
+// Presenting the form of creating Short URL to the user
+app.get("/urls/new", (req, res) => {
+  const templateVars = { urls: urlDatabase };
+  res.render("urls_new", templateVars);
+});
+
 //Creating page handler for short urls:
 app.get("/urls/:shortURL", (req, res) => {
   const templateVars = { shortURL: req.params.shortURL, longURL: urlDatabase[req.params.shortURL] };
   res.render("urls_show", templateVars);
 });
+
+
 
 //Creating a HTML page:
 app.get("/hello", (req, res) => {

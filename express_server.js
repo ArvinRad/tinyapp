@@ -64,18 +64,17 @@ app.get("/u/:shortURL", (req, res) => {
     res.redirect(longURL);
   }
 });
-//Creating a HTML page:
-app.get("/hello", (req, res) => {
-  res.send("<html><body>Hello <b>World</b></body></html>\n");
-});
-app.get("/set", (req, res) => {
-  const a = 1;
-  res.send(`a = ${a}`);
- });
 
- app.get("/fetch", (req, res) => {
-  res.send(`a = ${a}`);
- });
+
+
+//Creating a POST Request for deleting a URL:
+app.post("/urls/:shortURL/delete", (req, res) => {
+  if (req.params.shortURL) {
+    delete urlDatabase[req.params.shortURL];
+  }
+  const templateVars = { urls: urlDatabase };
+  res.render("urls_index", templateVars);
+});
 
 //Creating server listener:
 app.listen(PORT, () => {

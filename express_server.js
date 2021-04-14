@@ -59,8 +59,10 @@ app.post("/urls", (req, res) => {
 
 // Redirecting to URLS using short URLS:
 app.get("/u/:shortURL", (req, res) => {
-  const longURL = urlDatabase[req.params.shortURL];
-  res.redirect(longURL);
+  if (req.params.shortURL) {
+    const longURL = urlDatabase[req.params.shortURL];
+    res.redirect(longURL);
+  }
 });
 //Creating a HTML page:
 app.get("/hello", (req, res) => {

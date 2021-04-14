@@ -65,7 +65,16 @@ app.get("/u/:shortURL", (req, res) => {
   }
 });
 
+//Creating a POST Request for Editing a URL:
 
+app.post("/urls/:shortURL/Edit", (req, res) => {
+  const longURL = urlDatabase[req.params.shortURL];
+  delete urlDatabase[req.params.shortURL];
+  const shortURL = generateRandomString();
+  urlDatabase[shortURL] = longURL;
+  const templateVars = { shortURL: shortURL, longURL: longURL };
+  res.render("urls_show", templateVars);
+});
 
 //Creating a POST Request for deleting a URL:
 app.post("/urls/:shortURL/delete", (req, res) => {

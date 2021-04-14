@@ -27,7 +27,14 @@ function generateRandomString() {
   }
   return randomString.join('');
 }
-// Creating a LogIn username:
+
+//   Sign In Page  //
+
+app.get("/login", (req, res) => {
+  res.render("login");
+});
+
+//   Sign In Handler //
 app.post("/login", (req, res) => {
   users[req.body.username] = req.body.username
   res.cookie("username", users[req.body.username]);
@@ -36,6 +43,13 @@ app.post("/login", (req, res) => {
     urls: urlDatabase };
   res.render("urls_index", templateVars);
 })
+
+//   Log Out Handler //
+
+app.post("/logout", (req, res) => {
+  res.clearCookie("username");
+  res.redirect("/login");
+});
 
 // Creating the route page:
 app.get("/", (req, res) => {

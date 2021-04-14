@@ -18,7 +18,7 @@
           <input style= "margin: auto" class="form-control form-control-lg" type="text" name="username" placeholder="Your Username Here" style="width: 300px; margin: 10em">
           <button type="submit" class="btn btn-primary">Submit</button>
       <% } else { %>
-      <form class="form-inline" action="/login" method="POST">
+      <form class="form-inline" action="/logout" method="POST">
         <div class="form-group mb-2" style= "margin: auto">
           <label for="newURL">You are logged in as: <%= username %></label>
           <button type="submit" class="btn btn-primary">Log out</button>

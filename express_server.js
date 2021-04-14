@@ -1,15 +1,18 @@
 const express = require("express");
+const cookieParser = require('cookie-parser');
 const app = express();
 const PORT = 8080; // default port 8080
 
 //Adding the middleware:
 const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(cookieParser());
 
 //Adding ejs engine
 app.set("view engine", "ejs");
 
 // Creating short url database:
+const users = {};
 const urlDatabase = {
   "b2xVn2": "http://www.lighthouselabs.ca",
   "9sm5xK": "http://www.google.com"
@@ -24,10 +27,19 @@ function generateRandomString() {
   }
   return randomString.join('');
 }
+// Creating a LogIn username:
+app.post("/login", (req, res) => {
+  users[req.body.username] = req.body.username
+  res.cookie("username", users[req.body.username]);
+  const templateVars = {
+    username: req.body.username,
+    urls: urlDatabase };
+  res.render("urls_index", templateVars);
+})
 
 // Creating the route page:
 app.get("/", (req, res) => {
-  res.send("Hello!");
+  res.send("This App facilitates your short URLs. Please be autheticated here!");
 });
 
 //Creating route handler for "/urls":

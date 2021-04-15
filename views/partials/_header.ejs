@@ -11,18 +11,13 @@
       </div>
     </div>
     <div style="margin: 1em;">
-      <% if (!username) { %>
-      <form class="form-inline" action="/login" method="POST">
-        <div class="form-group mb-2" style= "margin: auto">
-          <label for="newURL">Log In:</label>
-          <input style= "margin: auto" class="form-control form-control-lg" type="text" name="username" placeholder="Your Username Here" style="width: 300px; margin: 10em">
-          <button type="submit" class="btn btn-primary">Submit</button>
-      <% } else { %>
-      <form class="form-inline" action="/logout" method="POST">
-        <div class="form-group mb-2" style= "margin: auto">
-          <label for="newURL">You are logged in as: <%= username %></label>
-          <button type="submit" class="btn btn-primary">Log out</button>
-      <% } %>
+      <% if (username) { %>
+          <form method="POST" action="/logout"> You are logged in as client:  <%= username %>
+          <button type="submit" class="btn btn-primary">Logout</button></form>
+        <%} else {%>
+          <a class="nav-item nav-link" href="login"> Log in HERE</a>
+          <a class="nav-item nav-link" href="register"> Register HERE</a>
+        <%} %>
         </div>
       </form>
     </div>

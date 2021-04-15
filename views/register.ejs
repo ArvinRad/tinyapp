@@ -1,5 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
+<header>
+  <nav class="navbar navbar-expand-md navbar-dark bg-success">
+    <a class="navbar-brand" href="/urls">TinyApp</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <a class="nav-item nav-link" href="/urls">My URLs</a>
+        <a class="nav-item nav-link" href="/urls/new">Create New URL</a>
+      </div>
+    </div>
+    <div style="margin: 1em;">
+      <a class="nav-item nav-link" href="login"> Log in HERE</a>
+      <a class="nav-item nav-link" href="register"> Register HERE</a>
+    </div>
+    </div>
+  </nav>
+</header>
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -18,11 +37,10 @@
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav">
           <form class="form-inline" action="/register" method="POST">
-          <input class="form-control" type="name" name="name" placeholder="Your Selected Username" style="width: 300px; margin: 3em">
-          <input class="form-control" type="email" name="email" placeholder="Email Address" style="width: 300px; margin: 3em">
-          <input class="form-control" type="password" name="password" placeholder="Your Password (> 4 characters)" style="width: 300px; margin: 2em">
-          <button type="submit" class="btn btn-primary">Register</button></form></br>
-          <a class="navbar-brand" href="/login">(Sign In Here, if you have already an account.)</a>
+          <input class="form-control" type="text" name="username" placeholder="Your Selected Username" style="width: 300px; margin: 1em">
+          <input class="form-control" type="email" name="email" placeholder="Email Address" style="width: 300px; margin: 1em">
+          <input class="form-control" type="password" name="password" placeholder="Your Password (> 4 characters)" style="width: 300px; margin: 1em">
+          <button type="submit" class="btn btn-primary">Register</button>
       </div>
     </div>
   </nav>

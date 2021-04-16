@@ -1,4 +1,5 @@
 const express = require("express");
+const bcrypt = require('bcrypt');
 const cookieParser = require('cookie-parser');
 const app = express();
 const PORT = 8080; // default port 8080
@@ -67,10 +68,10 @@ app.get("/register", (req, res) => {
 //   Registration Handler //
 
 app.post("/register", (req, res) => {
-
   if (req.body.email.includes("@") && !JSON.stringify(users).includes(req.body.email)) {
     const userId = userIdGen(userIdStore);
-    users[req.body.username] = { "id": userId, "email": req.body.email, "password": req.body.password};
+    const hashedPassword = bcrypt.hashSync(req.body.password, 10);
+    users[req.body.username] = { "id": userId, "email": req.body.email, "password": hashedPassword};
     res.redirect("/login");
   } else {
   res.send("Error 400: Email address or password is not valid or already used. Using your browser bottom, please return to the register page or go to sign in page if you have already an account.");
@@ -84,13 +85,14 @@ app.get("/login", (req, res) => {
 
 // Sign In Handler
 app.post("/login", (req, res) => {
-  if (JSON.stringify(users).includes(req.body.password) && JSON.stringify(users).includes(req.body.email)) {
-    res.cookie("user_id", getUserByEmail(req.body.email, users)[1].id)
-    res.cookie("user_name", getUserByEmail(req.body.email, users)[0])
-    res.redirect("/urls");
-  } else {
-    res.send("Error 403: Username or password is not valid. Please return to login page using your browser bottom.");
-  }
+  if (JSON.stringify(users).includes(req.body.email)) {
+    if (bcrypt.compareSync(req.body.password, getUserByEmail(req.body.email, users)[1].password)) {
+      res.cookie("user_id", getUserByEmail(req.body.email, users)[1].id)
+      res.cookie("user_name", getUserByEmail(req.body.email, users)[0])
+      res.redirect("/urls");
+    } else res.send("Error 403: Username or password is not valid. Please return to login page using your browser bottom.");
+  } else res.send("Error 403: Username or password is not valid. Please return to login page using your browser bottom.");
+
 });
 
 //   Log Out Handler //

@@ -75,8 +75,7 @@ app.post("/login", (req, res) => {
 //   Log Out Handler //
 
 app.post("/logout", (req, res) => {
-  req.session.user_id = null;
-  req.session.user_name = null;
+  req.session = null;
   res.redirect("/login");
 });
 
@@ -143,11 +142,9 @@ app.get("/u/:shortURL", (req, res) => {
 
 app.post("/urls/:shortURL/Edit", (req, res) => {
   if (req.session.user_name) {
-    const longURL = urlDatabase[req.params.shortURL].longURL;
+    const shortURL = req.params.shortURL;
     if (urlDatabase[req.params.shortURL].userID === req.session.user_id) {
-      delete urlDatabase[req.params.shortURL];
-      const shortURL = helpers.generateRandomString();
-      urlDatabase[shortURL] = {"longURL": longURL, "userID": req.session.user_id};
+      longURL = urlDatabase[shortURL].longURL;
       const templateVars = {
         username: req.session.user_name,
         shortURL: shortURL,
@@ -155,6 +152,19 @@ app.post("/urls/:shortURL/Edit", (req, res) => {
       };
       res.render("urls_show", templateVars);
     } else res.send("Only owners can edit their short URLs!");
+  } else res.redirect("/login");
+});
+
+//Adding a Post handler for edited long URLs:
+app.post("/urls/Edited/:shortURL", (req, res) => {
+  if (req.session.user_name) {
+    const shortURL = req.params.shortURL;
+    const longURL = req.body["longURL"]
+    urlDatabase[shortURL] = {
+      longURL: longURL,
+      userID: req.session.user_id
+    };
+    res.redirect(`/urls/${shortURL}`);
   } else res.redirect("/login");
 });
 
